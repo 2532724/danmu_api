@@ -1,0 +1,18 @@
+name: Deploy to Cloudflare Workers
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # 支持手动点击按钮触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          workingDirectory: 'danmu_api' # 核心 worker.js 所在的目录
